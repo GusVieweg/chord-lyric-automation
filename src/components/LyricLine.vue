@@ -69,7 +69,12 @@ export default {
     this.spaces = Array(this.words.length);
     this.spaces.fill(1);
     this.words.forEach((word, index) => {
+<<<<<<< HEAD
       if (word[0] == ">") {
+=======
+      if (word[0] == "\\") {
+        // this.words[index] = " ";
+>>>>>>> 20fec8d0999452b7b7640cc74d03acfb800d19f6
         this.words[index] = "";
       }
     });
