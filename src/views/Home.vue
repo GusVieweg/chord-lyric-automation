@@ -18,6 +18,7 @@
         <v-col>
           <div v-for="(lyric, idx) in lyrics" :key="idx">
             <ComboLine
+              :lyricUpdates="lyricUpdates"
               :lyric="lyric"
               :transposeN="transposeN"
               @disableTranspose="captureDisable"
@@ -44,6 +45,7 @@ export default {
   mixins: [CopyChordsAndLyrics],
   data: () => ({
     lyrics: null,
+    lyricUpdates: 0,
     title: "",
     transposeN: 0,
     disableTranspose: true,
@@ -52,7 +54,8 @@ export default {
   }),
   methods: {
     captureLyrics(lyrics) {
-      this.lyrics = lyrics;
+      this.lyrics = lyrics.array;
+      this.lyricUpdates = lyrics.updates;
     },
     captureTitle(value) {
       this.title = value;

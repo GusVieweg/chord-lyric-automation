@@ -28,6 +28,7 @@ export default {
     words: null
   }),
   props: {
+    lyricUpdates: Number,
     lyric: String,
     spaces: Array,
     line: Number,
@@ -48,23 +49,20 @@ export default {
       this.$emit("chordsEntered", this.chords);
     },
     compareLyricsAndChords(index) {
-      console.log("chord compareLyricsAndChords");
       let l = this.dismantleLyric(this.lyric);
       let c = this.chords;
       if (!c[index]) {
-        c.splice(index, 1, "1");
+        c.splice(index, 1, "x");
       }
       if (l[index][0] == "\\") {
-        l[index] = l[index].substring(1);
+        c[index] = l[index].substring(1);
+        l[index] = "";
       }
-      console.log(c[index]);
-      console.log(l[index]);
       if (l[index].length > c[index].length) {
         this.spaces.splice(index, 1, l[index].length - c[index].length + 1);
       } else {
         this.spaces.splice(index, 1, 1);
       }
-      console.log(this.spaces);
     },
     andDisable(disable, index) {
       this.badChords.splice(index, 1, disable);
@@ -83,8 +81,7 @@ export default {
     ChordBox
   },
   watch: {
-    lyric: function() {
-      console.log("lyric changed (chordline)");
+    lyricUpdates: function() {
       this.countWords();
       for (let i = 0; i < this.wordCount; i++) {
         this.compareLyricsAndChords(i);

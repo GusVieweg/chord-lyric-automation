@@ -171,6 +171,7 @@ export default {
   data: () => ({
     lyrics: "",
     lyricArray: null,
+    lyricUpdates: 0,
     title: "",
     transposeN: 0,
     dialog: false
@@ -181,7 +182,11 @@ export default {
   methods: {
     lyricsDone() {
       this.lyricArray = this.lyrics.split("\n");
-      this.$emit("lyricsDone", this.lyricArray);
+      this.lyricUpdates += 1;
+      this.$emit("lyricsDone", {
+        array: this.lyricArray,
+        updates: this.lyricUpdates
+      });
     },
     titleEntered() {
       this.$emit("titleEntered", this.title);

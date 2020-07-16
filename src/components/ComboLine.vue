@@ -6,6 +6,7 @@
           :exporting="exporting"
           :spaces="spaces"
           :lyric="lyric"
+          :lyricUpdates="lyricUpdates"
           :transposeN="transposeN"
           @chordsEntered="captureChords($event)"
           @disableTranspose="disable($event)"
@@ -14,7 +15,12 @@
     </v-row>
     <v-row>
       <v-col class="py-0 my-2">
-        <LyricLine :lyric="lyric" :chords="chords" style="padding-top:0px;" />
+        <LyricLine
+          :lyric="lyric"
+          :lyricUpdates="lyricUpdates"
+          :chords="chords"
+          style="padding-top:0px;"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -32,6 +38,7 @@ export default {
     chords: []
   }),
   props: {
+    lyricUpdates: Number,
     lyric: String,
     transposeN: Number,
     exporting: Boolean
