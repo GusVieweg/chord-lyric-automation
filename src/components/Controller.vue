@@ -5,7 +5,10 @@
       <!-- page title -->
       <v-col class="pt-0 my-0 pb-3 pr-0" cols="3" align="center">
         <p>
-          <v-icon style="vertical-align:middle;margin-bottom:6px; color:#5F917A;">mdi-music-note</v-icon>
+          <v-icon
+            style="vertical-align:middle;margin-bottom:6px; color:#5F917A;"
+            >mdi-music-note</v-icon
+          >
           <b>Bowstring</b>
 
           <!-- help dialog -->
@@ -26,13 +29,14 @@
               </v-btn>
             </template>
             <v-card>
-              <v-card-title class="headline" primary-title>Bowstring Help</v-card-title>
+              <v-card-title class="headline" primary-title
+                >Bowstring Help</v-card-title
+              >
               <v-divider></v-divider>
               <v-card-text>
                 <br />
                 <b>To add a solo chordbox:</b> Type a ">" followed by the chord
-                (i.e.
-                <code>>Gmaj7</code>).
+                (i.e. <code>>Gmaj7</code>).
                 <br />
                 <b>To export:</b> Click the download button to export to PDF.
                 <br />
@@ -144,7 +148,7 @@
           color="#5F917A"
           :disabled="!lyricArray"
         >
-          <v-icon>{{this.clipboardIcon}}</v-icon>
+          <v-icon>{{ this.clipboardIcon }}</v-icon>
         </v-btn>
       </v-col>
       <v-col class="py-0 my-0" cols="1">
@@ -170,6 +174,7 @@ export default {
   data: () => ({
     lyrics: "",
     lyricArray: null,
+    lyricUpdates: 0,
     title: "",
     transposeN: 0,
     dialog: false,
@@ -181,8 +186,12 @@ export default {
   methods: {
     lyricsDone() {
       this.lyricArray = this.lyrics.split("\n");
-      this.$emit("lyricsDone", this.lyricArray);
+      this.lyricUpdates += 1;
       this.clipboardIcon = "mdi-clipboard-outline";
+      this.$emit("lyricsDone", {
+        array: this.lyricArray,
+        updates: this.lyricUpdates
+      });
     },
     titleEntered() {
       this.$emit("titleEntered", this.title);

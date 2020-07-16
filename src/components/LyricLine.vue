@@ -2,9 +2,7 @@
   <div>
     <span class="lyric-container" v-for="(word, index) in words" :key="index">
       <span class="word" :style="'padding-right:' + spaces[index] + 'ch;'">
-        {{
-        word
-        }}
+        {{ word }}
       </span>
     </span>
   </div>
@@ -30,7 +28,7 @@ export default {
       let c = this.chords;
 
       if (!c[index]) {
-        c.splice(index, 1, "1");
+        c.splice(index, 1, "x");
       }
       if (index == 0 && !l[index].trim()) {
         this.spaces.splice(index, 1, c[index].length + 1);
@@ -43,7 +41,7 @@ export default {
       }
     }
   },
-  props: ["lyric", "chords"],
+  props: ["lyric", "chords", "lyricUpdates"],
   watch: {
     chords: {
       handler: function() {
@@ -52,29 +50,30 @@ export default {
         }
       }
     },
-    lyric: {
+    lyricUpdates: {
       handler: function() {
         this.words = this.dismantleLyric(this.lyric);
-        this.words.forEach((word, index) => {
-          if (word[0] == ">") {
-            this.words[index] = " ";
-          }
-        });
         this.spaces = Array(this.words.length);
         this.spaces.fill(1);
+        this.words.forEach((word, index) => {
+          if (word[0] == ">") {
+            this.words[index] = "";
+          }
+        });
         this.addSpacesToLyric();
       }
     }
   },
   mounted() {
     this.words = this.dismantleLyric(this.lyric);
-    this.words.forEach((word, index) => {
-      if (word[0] == ">") {
-        this.words[index] = " ";
-      }
-    });
     this.spaces = Array(this.words.length);
     this.spaces.fill(1);
+    this.words.forEach((word, index) => {
+      if (word[0] == ">") {
+        this.words[index] = "";
+      }
+    });
+    this.addSpacesToLyric();
   }
 };
 </script>
